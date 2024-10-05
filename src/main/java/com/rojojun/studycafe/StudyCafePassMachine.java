@@ -1,7 +1,7 @@
 package com.rojojun.studycafe;
 
 import com.rojojun.studycafe.exception.AppException;
-import com.rojojun.studycafe.io.InputHandler;
+import com.rojojun.studycafe.io.IOHandler;
 import com.rojojun.studycafe.io.OutputHandler;
 import com.rojojun.studycafe.io.StudyCafeFileHandler;
 import com.rojojun.studycafe.model.StudyCafeLockerPass;
@@ -11,20 +11,13 @@ import com.rojojun.studycafe.model.StudyCafePassType;
 import java.util.List;
 
 public class StudyCafePassMachine {
-
-    // input
-    private final InputHandler inputHandler = new InputHandler();
-    // output
-    private final OutputHandler outputHandler = new OutputHandler();
+    private final IOHandler ioHandler = new IOHandler();
 
     public void run() {
         try {
-            // 묶는게 나을 수도?
-            outputHandler.showWelcomeMessage();
-            outputHandler.showAnnouncement();
+            ioHandler.showProgramWelcomeMessage();
 
-            outputHandler.askPassTypeSelection();
-            StudyCafePassType studyCafePassType = inputHandler.getPassTypeSelectingUserAction();
+            StudyCafePassType studyCafePassType = ioHandler.askPassTypeSelection();
 
             StudyCafeFileHandler studyCafeFileHandler = new StudyCafeFileHandler();
             List<StudyCafePass> studyCafePasses = studyCafeFileHandler.readStudyCafePasses();
@@ -33,22 +26,21 @@ public class StudyCafePassMachine {
                 List<StudyCafePass> hourlyPasses = studyCafePasses.stream()
                         .filter(studyCafePass -> studyCafePass.getPassType() == StudyCafePassType.HOURLY)
                         .toList();
-                outputHandler.showPassListForSelection(hourlyPasses);
-                StudyCafePass selectedPass = inputHandler.getSelectPass(hourlyPasses);
-                outputHandler.showPassOrderSummary(selectedPass, null);
+
+                StudyCafePass selectedPass = ioHandler.askPassListForSelection(hourlyPasses);
+                ioHandler.showPassOrderSummary(selectedPass);
             } else if (studyCafePassType == StudyCafePassType.WEEKLY) {
                 List<StudyCafePass> weeklyPasses = studyCafePasses.stream()
                         .filter(studyCafePass -> studyCafePass.getPassType() == StudyCafePassType.WEEKLY)
                         .toList();
-                outputHandler.showPassListForSelection(weeklyPasses);
-                StudyCafePass selectedPass = inputHandler.getSelectPass(weeklyPasses);
-                outputHandler.showPassOrderSummary(selectedPass, null);
+
+                StudyCafePass selectedPass = ioHandler.askPassListForSelection(weeklyPasses);
+                ioHandler.showPassOrderSummary(selectedPass);
             } else if (studyCafePassType == StudyCafePassType.FIXED) {
                 List<StudyCafePass> fixedPasses = studyCafePasses.stream()
                         .filter(studyCafePass -> studyCafePass.getPassType() == StudyCafePassType.FIXED)
                         .toList();
-                outputHandler.showPassListForSelection(fixedPasses);
-                StudyCafePass selectedPass = inputHandler.getSelectPass(fixedPasses);
+                StudyCafePass selectedPass = ioHandler.askPassListForSelection(fixedPasses);
 
                 List<StudyCafeLockerPass> lockerPasses = studyCafeFileHandler.readLockerPasses();
                 StudyCafeLockerPass lockerPass = lockerPasses.stream()
@@ -61,20 +53,19 @@ public class StudyCafePassMachine {
 
                 boolean lockerSelection = false;
                 if (lockerPass != null) {
-                    outputHandler.askLockerPass(lockerPass);
-                    lockerSelection = inputHandler.getLockerSelection();
+                    lockerSelection = ioHandler.askLockerSelection(lockerPass);
                 }
 
                 if (lockerSelection) {
-                    outputHandler.showPassOrderSummary(selectedPass, lockerPass);
+                    ioHandler.showPassOrderSummary(selectedPass, lockerPass);
                 } else {
-                    outputHandler.showPassOrderSummary(selectedPass, null);
+                    ioHandler.showPassOrderSummary(selectedPass);
                 }
             }
         } catch (AppException e) {
-            outputHandler.showSimpleMessage(e.getMessage());
+            ioHandler.showSimpleMessage(e.getMessage());
         } catch (Exception e) {
-            outputHandler.showSimpleMessage("알 수 없는 오류가 발생했습니다.");
+            ioHandler.showSimpleMessage("알 수 없는 오류가 발생했습니다.");
         }
     }
 
