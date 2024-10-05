@@ -14,7 +14,7 @@ public class StudyCafeFileHandler {
 
     public List<StudyCafePass> readStudyCafePasses() {
         try {
-            List<String> lines = Files.readAllLines(Paths.get("src/main/resources/cleancode/studycafe/pass-list.csv"));
+            List<String> lines = Files.readAllLines(Paths.get("src/main/resources/studycafe/pass-list.csv"));
             List<StudyCafePass> studyCafePasses = new ArrayList<>();
             for (String line : lines) {
                 String[] values = line.split(",");
@@ -35,7 +35,7 @@ public class StudyCafeFileHandler {
 
     public List<StudyCafeLockerPass> readLockerPasses() {
         try {
-            List<String> lines = Files.readAllLines(Paths.get("src/main/resources/cleancode/studycafe/locker.csv"));
+            List<String> lines = Files.readAllLines(Paths.get("src/main/resources/studycafe/locker.csv"));
             List<StudyCafeLockerPass> lockerPasses = new ArrayList<>();
             for (String line : lines) {
                 String[] values = line.split(",");
