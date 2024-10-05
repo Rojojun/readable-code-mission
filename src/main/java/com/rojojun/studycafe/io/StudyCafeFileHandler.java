@@ -1,8 +1,8 @@
 package com.rojojun.studycafe.io;
 
-import cleancode.studycafe.tobe.model.StudyCafeLockerPass;
-import cleancode.studycafe.tobe.model.StudyCafePass;
-import cleancode.studycafe.tobe.model.StudyCafePassType;
+import com.rojojun.studycafe.model.StudyCafeLockerPass;
+import com.rojojun.studycafe.model.StudyCafePass;
+import com.rojojun.studycafe.model.StudyCafePassType;
 
 import java.io.IOException;
 import java.nio.file.Files;

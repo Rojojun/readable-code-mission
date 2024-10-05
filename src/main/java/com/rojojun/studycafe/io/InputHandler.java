@@ -1,8 +1,10 @@
 package com.rojojun.studycafe.io;
 
-import cleancode.studycafe.tobe.exception.AppException;
-import cleancode.studycafe.tobe.model.StudyCafePass;
-import cleancode.studycafe.tobe.model.StudyCafePassType;
+
+
+import com.rojojun.studycafe.exception.AppException;
+import com.rojojun.studycafe.model.StudyCafePass;
+import com.rojojun.studycafe.model.StudyCafePassType;
 
 import java.util.List;
 import java.util.Scanner;

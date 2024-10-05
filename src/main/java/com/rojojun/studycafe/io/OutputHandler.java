@@ -1,7 +1,7 @@
 package com.rojojun.studycafe.io;
 
-import cleancode.studycafe.tobe.model.StudyCafeLockerPass;
-import cleancode.studycafe.tobe.model.StudyCafePass;
+import com.rojojun.studycafe.model.StudyCafeLockerPass;
+import com.rojojun.studycafe.model.StudyCafePass;
 
 import java.util.List;
 
