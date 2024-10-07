@@ -30,6 +30,12 @@ public class IOHandler {
         return inputHandler.getLockerSelection();
     }
 
+    public boolean askLockerSelection(StudyCafePass selectedPass, StudyCafeLockerPass lockerPass) {
+        outputHandler.askLockerPass(lockerPass);
+        outputHandler.showPassOrderSummary(selectedPass, lockerPass);
+        return inputHandler.getLockerSelection();
+    }
+
     public void showSimpleMessage(String message) {
         outputHandler.showSimpleMessage(message);
     }
