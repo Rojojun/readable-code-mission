@@ -3,7 +3,6 @@ package com.rojojun.studycafe.model;
 import com.rojojun.studycafe.exception.AppException;
 import com.rojojun.studycafe.io.StudyCafeFileHandler;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,5 +38,9 @@ public enum StudyCafePassType {
         List<StudyCafePass> hourlyPasses = studyCafePasses.stream()
                 .filter(studyCafePass -> studyCafePass.getPassType() == type)
                 .toList();
+    }
+
+    public boolean isTypeEqual(StudyCafePass studyCafePass) {
+        return studyCafePass.isTypeEqual(this);
     }
 }

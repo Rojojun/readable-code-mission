@@ -22,32 +22,16 @@ public class StudyCafePassMachine {
             StudyCafeFileHandler studyCafeFileHandler = new StudyCafeFileHandler();
             List<StudyCafePass> studyCafePasses = studyCafeFileHandler.readStudyCafePasses();
 
-            if (studyCafePassType == StudyCafePassType.HOURLY) {
-                List<StudyCafePass> hourlyPasses = studyCafePasses.stream()
-                        .filter(studyCafePass -> studyCafePass.getPassType() == StudyCafePassType.HOURLY)
-                        .toList();
-
-                StudyCafePass selectedPass = ioHandler.askPassListForSelection(hourlyPasses);
-                ioHandler.showPassOrderSummary(selectedPass);
-            } else if (studyCafePassType == StudyCafePassType.WEEKLY) {
-                List<StudyCafePass> weeklyPasses = studyCafePasses.stream()
-                        .filter(studyCafePass -> studyCafePass.getPassType() == StudyCafePassType.WEEKLY)
-                        .toList();
-
-                StudyCafePass selectedPass = ioHandler.askPassListForSelection(weeklyPasses);
-                ioHandler.showPassOrderSummary(selectedPass);
-            } else if (studyCafePassType == StudyCafePassType.FIXED) {
-                List<StudyCafePass> fixedPasses = studyCafePasses.stream()
-                        .filter(studyCafePass -> studyCafePass.getPassType() == StudyCafePassType.FIXED)
-                        .toList();
-                StudyCafePass selectedPass = ioHandler.askPassListForSelection(fixedPasses);
+            List<StudyCafePass> passList = studyCafePasses.stream()
+                    .filter(studyCafePassType::isTypeEqual)
+                    .toList();
+            StudyCafePass selectedPass = ioHandler.askPassListForSelection(passList);
+            ioHandler.showPassOrderSummary(selectedPass);
+            if (studyCafePassType == StudyCafePassType.FIXED) {
 
                 List<StudyCafeLockerPass> lockerPasses = studyCafeFileHandler.readLockerPasses();
                 StudyCafeLockerPass lockerPass = lockerPasses.stream()
-                        .filter(option ->
-                                option.getPassType() == selectedPass.getPassType()
-                                        && option.getDuration() == selectedPass.getDuration()
-                        )
+                        .filter(option -> option.getPassType() == selectedPass.getPassType() && option.getDuration() == selectedPass.getDuration())
                         .findFirst()
                         .orElse(null);
 
