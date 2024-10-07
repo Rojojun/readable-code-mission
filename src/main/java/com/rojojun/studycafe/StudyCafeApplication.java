@@ -6,5 +6,4 @@ public class StudyCafeApplication {
         StudyCafePassMachine studyCafePassMachine = new StudyCafePassMachine();
         studyCafePassMachine.run();
     }
-
 }

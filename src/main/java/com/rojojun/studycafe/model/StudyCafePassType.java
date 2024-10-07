@@ -8,16 +8,18 @@ import java.util.List;
 
 public enum StudyCafePassType {
 
-    HOURLY("시간 단위 이용권", 1),
-    WEEKLY("주 단위 이용권", 2),
-    FIXED("1인 고정석", 3);
+    HOURLY("시간 단위 이용권", 1, false),
+    WEEKLY("주 단위 이용권", 2, false),
+    FIXED("1인 고정석", 3, true);
 
     private final String description;
     private final int inputCode;
+    private final boolean hasLocker;
 
-    StudyCafePassType(String description, int inputCode) {
+    StudyCafePassType(String description, int inputCode, boolean hasLocker) {
         this.description = description;
         this.inputCode = inputCode;
+        this.hasLocker = hasLocker;
     }
 
     public static StudyCafePassType sendTypeBy(String userInput) {
@@ -30,6 +32,10 @@ public enum StudyCafePassType {
         } catch (NumberFormatException e) {
             throw new AppException("입력값은 숫자가 되어야합니다.");
         }
+    }
+
+    public static boolean hasLockerOption(StudyCafePassType studyCafePassTypeFromUser) {
+        return studyCafePassTypeFromUser.hasLocker;
     }
 
     public void getDescription(StudyCafePassType type) {
