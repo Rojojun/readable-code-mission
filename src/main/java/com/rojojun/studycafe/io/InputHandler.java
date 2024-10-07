@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class InputHandler {
 
     private static final Scanner SCANNER = new Scanner(System.in);
+    public static final String SELECT_LOCKER_CODE = "1";
 
     public StudyCafePassType getPassTypeSelectingUserAction() {
         String userInput = SCANNER.nextLine();
@@ -26,7 +27,7 @@ public class InputHandler {
 
     public boolean getLockerSelection() {
         String userInput = SCANNER.nextLine();
-        return "1".equals(userInput);
+        return SELECT_LOCKER_CODE.equals(userInput);
     }
 
 }

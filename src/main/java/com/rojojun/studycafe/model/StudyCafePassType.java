@@ -1,10 +1,8 @@
 package com.rojojun.studycafe.model;
 
 import com.rojojun.studycafe.exception.AppException;
-import com.rojojun.studycafe.io.StudyCafeFileHandler;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum StudyCafePassType {
 
@@ -36,14 +34,6 @@ public enum StudyCafePassType {
 
     public static boolean hasLockerOption(StudyCafePassType studyCafePassTypeFromUser) {
         return studyCafePassTypeFromUser.hasLocker;
-    }
-
-    public void getDescription(StudyCafePassType type) {
-        StudyCafeFileHandler studyCafeFileHandler = new StudyCafeFileHandler();
-        List<StudyCafePass> studyCafePasses = studyCafeFileHandler.readStudyCafePasses();
-        List<StudyCafePass> hourlyPasses = studyCafePasses.stream()
-                .filter(studyCafePass -> studyCafePass.getPassType() == type)
-                .toList();
     }
 
     public boolean isTypeEqual(StudyCafePass studyCafePass) {

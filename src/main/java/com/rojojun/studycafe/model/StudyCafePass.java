@@ -26,20 +26,20 @@ public class StudyCafePass {
         return passType.isPassTypeEqual(this.passType);
     }
 
-    public StudyCafePassType getPassType() {
-        return passType;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
     public int getPrice() {
         return price;
     }
 
     public double getDiscountRate() {
         return discountRate;
+    }
+
+    public int getDiscountPrice() {
+        return (int) (this.price * this.discountRate);
+    }
+
+    public int getTotalCafeUsagePrice() {
+        return this.price - getDiscountPrice();
     }
 
     public String display() {
