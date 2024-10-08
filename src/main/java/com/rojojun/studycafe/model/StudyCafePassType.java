@@ -39,4 +39,11 @@ public enum StudyCafePassType {
     public boolean isTypeEqual(StudyCafePass studyCafePass) {
         return studyCafePass.isTypeEqual(this);
     }
+
+    public String createDisplayMessage(int duration, int price) {
+        return switch (this) {
+            case FIXED, WEEKLY -> String.format("%s주권 - %d원", duration, price);
+            case HOURLY -> String.format("%s시간권 - %d원", duration, price);
+        };
+    }
 }

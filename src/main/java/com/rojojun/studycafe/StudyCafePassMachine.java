@@ -3,9 +3,7 @@ package com.rojojun.studycafe;
 import com.rojojun.studycafe.exception.AppException;
 import com.rojojun.studycafe.io.IOHandler;
 import com.rojojun.studycafe.io.StudyCafeFileHandler;
-import com.rojojun.studycafe.model.StudyCafeLockerPass;
-import com.rojojun.studycafe.model.StudyCafePass;
-import com.rojojun.studycafe.model.StudyCafePassType;
+import com.rojojun.studycafe.model.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +18,8 @@ public class StudyCafePassMachine {
 
             StudyCafePassType studyCafePassTypeFromUser = ioHandler.askPassTypeSelection();
 
-            List<StudyCafePass> studyCafePasses = studyCafeFileHandler.readStudyCafePasses();
+//            List<StudyCafePass> studyCafePasses = studyCafeFileHandler.readStudyCafePasses();
+            StudyCafePasses studyCafePasses = studyCafeFileHandler.readStudyCafePasses();
 
             StudyCafePass selectedPass = extractStudyCafePassFromUserInput(studyCafePasses, studyCafePassTypeFromUser);
             ioHandler.showPassOrderSummary(selectedPass);
@@ -36,7 +35,8 @@ public class StudyCafePassMachine {
     }
 
     private void handleLockerOption(StudyCafeFileHandler studyCafeFileHandler, StudyCafePass selectedPass) {
-        List<StudyCafeLockerPass> lockerPasses = studyCafeFileHandler.readLockerPasses();
+//        List<StudyCafeLockerPass> lockerPasses = studyCafeFileHandler.readLockerPasses();
+        StudyCafeLockerPasses lockerPasses = studyCafeFileHandler.readLockerPasses();
         Optional<StudyCafeLockerPass> lockerPass = findMatchingLockerPass(lockerPasses, selectedPass);
 
         boolean lockerSelection = lockerPass.isPresent() && ioHandler.askLockerSelection(lockerPass.get());
@@ -48,16 +48,12 @@ public class StudyCafePassMachine {
         }
     }
 
-    private Optional<StudyCafeLockerPass> findMatchingLockerPass(List<StudyCafeLockerPass> lockerPasses, StudyCafePass selectedPass) {
-        return lockerPasses.stream()
-                .filter(option -> selectedPass.isPassTypeEqual(option) && selectedPass.isDurationEqual(option))
-                .findFirst();
+    private Optional<StudyCafeLockerPass> findMatchingLockerPass(StudyCafeLockerPasses lockerPasses, StudyCafePass selectedPass) {
+        return lockerPasses.findMatchingLockerPass(selectedPass);
     }
 
-    private StudyCafePass extractStudyCafePassFromUserInput(List<StudyCafePass> studyCafePasses, StudyCafePassType studyCafePassType) {
-        List<StudyCafePass> passList = studyCafePasses.stream()
-                .filter(studyCafePassType::isTypeEqual)
-                .toList();
+    private StudyCafePass extractStudyCafePassFromUserInput(StudyCafePasses studyCafePasses, StudyCafePassType studyCafePassType) {
+        List<StudyCafePass> passList = studyCafePasses.getListBy(studyCafePassType);
         return ioHandler.askPassListForSelection(passList);
     }
 

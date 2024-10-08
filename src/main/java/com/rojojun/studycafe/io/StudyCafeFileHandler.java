@@ -1,8 +1,6 @@
 package com.rojojun.studycafe.io;
 
-import com.rojojun.studycafe.model.StudyCafeLockerPass;
-import com.rojojun.studycafe.model.StudyCafePass;
-import com.rojojun.studycafe.model.StudyCafePassType;
+import com.rojojun.studycafe.model.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,7 +13,7 @@ public class StudyCafeFileHandler {
     public static final String PASS_LIST_CSV = "src/main/resources/studycafe/pass-list.csv";
     public static final String LOCKER_CSV = "src/main/resources/studycafe/locker.csv";
 
-    public List<StudyCafePass> readStudyCafePasses() {
+    public StudyCafePasses readStudyCafePasses() {
         try {
             List<String> lines = Files.readAllLines(Paths.get(PASS_LIST_CSV));
             List<StudyCafePass> studyCafePasses = new ArrayList<>();
@@ -30,13 +28,13 @@ public class StudyCafeFileHandler {
                 studyCafePasses.add(studyCafePass);
             }
 
-            return studyCafePasses;
+            return StudyCafePasses.of(studyCafePasses);
         } catch (IOException e) {
             throw new RuntimeException("파일을 읽는데 실패했습니다.", e);
         }
     }
 
-    public List<StudyCafeLockerPass> readLockerPasses() {
+    public StudyCafeLockerPasses readLockerPasses() {
         try {
             List<String> lines = Files.readAllLines(Paths.get(LOCKER_CSV));
             List<StudyCafeLockerPass> lockerPasses = new ArrayList<>();
@@ -47,13 +45,13 @@ public class StudyCafeFileHandler {
                 int price = Integer.parseInt(values[2]);
 
                 StudyCafeLockerPass lockerPass = StudyCafeLockerPass.of(studyCafePassType, duration, price);
+
                 lockerPasses.add(lockerPass);
             }
 
-            return lockerPasses;
+            return StudyCafeLockerPasses.of(lockerPasses);
         } catch (IOException e) {
             throw new RuntimeException("파일을 읽는데 실패했습니다.", e);
         }
     }
-
 }

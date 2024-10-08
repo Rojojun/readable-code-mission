@@ -1,6 +1,6 @@
 package com.rojojun.studycafe.model;
 
-public class StudyCafePass {
+public class StudyCafePass implements DisplayablePass {
 
     private final StudyCafePassType passType;
     private final int duration;
@@ -26,12 +26,8 @@ public class StudyCafePass {
         return passType.isPassTypeEqual(this.passType);
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public double getDiscountRate() {
-        return discountRate;
+    public boolean isDurationEqual(StudyCafeLockerPass option) {
+        return option.isDurationEqual(this.duration);
     }
 
     public int getDiscountPrice() {
@@ -42,20 +38,8 @@ public class StudyCafePass {
         return this.price - getDiscountPrice();
     }
 
+    @Override
     public String display() {
-        if (passType == StudyCafePassType.HOURLY) {
-            return String.format("%s시간권 - %d원", duration, price);
-        }
-        if (passType == StudyCafePassType.WEEKLY) {
-            return String.format("%s주권 - %d원", duration, price);
-        }
-        if (passType == StudyCafePassType.FIXED) {
-            return String.format("%s주권 - %d원", duration, price);
-        }
-        return "";
-    }
-
-    public boolean isDurationEqual(StudyCafeLockerPass option) {
-        return option.isDurationEqual(this.duration);
+        return passType.createDisplayMessage(duration, price);
     }
 }
