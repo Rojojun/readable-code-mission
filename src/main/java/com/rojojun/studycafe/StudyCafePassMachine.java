@@ -2,7 +2,8 @@ package com.rojojun.studycafe;
 
 import com.rojojun.studycafe.exception.AppException;
 import com.rojojun.studycafe.io.IOHandler;
-import com.rojojun.studycafe.io.StudyCafeFileHandler;
+import com.rojojun.studycafe.io.provider.CafeInfoFileProvider;
+import com.rojojun.studycafe.io.provider.LockerInfoFileProvider;
 import com.rojojun.studycafe.model.*;
 
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.Optional;
 
 public class StudyCafePassMachine {
     private final IOHandler ioHandler = new IOHandler();
-    private final StudyCafeFileHandler studyCafeFileHandler = new StudyCafeFileHandler();
+    private final CafeInfoFileProvider cafeInfoFileProvider = new CafeInfoFileProvider();
+    private final LockerInfoFileProvider lockerInfoFileProvider = new LockerInfoFileProvider();
 
     public void run() {
         try {
@@ -18,14 +20,13 @@ public class StudyCafePassMachine {
 
             StudyCafePassType studyCafePassTypeFromUser = ioHandler.askPassTypeSelection();
 
-//            List<StudyCafePass> studyCafePasses = studyCafeFileHandler.readStudyCafePasses();
-            StudyCafePasses studyCafePasses = studyCafeFileHandler.readStudyCafePasses();
+            StudyCafePasses studyCafePasses = cafeInfoFileProvider.readStudyCafePasses();
 
             StudyCafePass selectedPass = extractStudyCafePassFromUserInput(studyCafePasses, studyCafePassTypeFromUser);
             ioHandler.showPassOrderSummary(selectedPass);
 
             if (StudyCafePassType.hasLockerOption(studyCafePassTypeFromUser)) {
-                handleLockerOption(studyCafeFileHandler, selectedPass);
+                handleLockerOption(selectedPass);
             }
         } catch (AppException e) {
             ioHandler.showSimpleMessage(e.getMessage());
@@ -34,9 +35,8 @@ public class StudyCafePassMachine {
         }
     }
 
-    private void handleLockerOption(StudyCafeFileHandler studyCafeFileHandler, StudyCafePass selectedPass) {
-//        List<StudyCafeLockerPass> lockerPasses = studyCafeFileHandler.readLockerPasses();
-        StudyCafeLockerPasses lockerPasses = studyCafeFileHandler.readLockerPasses();
+    private void handleLockerOption(StudyCafePass selectedPass) {
+        StudyCafeLockerPasses lockerPasses = lockerInfoFileProvider.readLockerPasses();
         Optional<StudyCafeLockerPass> lockerPass = findMatchingLockerPass(lockerPasses, selectedPass);
 
         boolean lockerSelection = lockerPass.isPresent() && ioHandler.askLockerSelection(lockerPass.get());
@@ -56,5 +56,4 @@ public class StudyCafePassMachine {
         List<StudyCafePass> passList = studyCafePasses.getListBy(studyCafePassType);
         return ioHandler.askPassListForSelection(passList);
     }
-
 }
