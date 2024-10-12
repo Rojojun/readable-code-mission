@@ -1,9 +1,10 @@
 package com.rojojun.tobe.minesweeper.io;
 
-import cleancode.minesweeper.tobe.minesweeper.board.GameBoard;
-import cleancode.minesweeper.tobe.minesweeper.exception.GameExcpetion;
+import com.rojojun.tobe.minesweeper.board.GameBoard;
+import com.rojojun.tobe.minesweeper.exception.GameException;
 
 public interface OutputHandler {
+
     void showGameStartComments();
 
     void showBoard(GameBoard board);
@@ -16,7 +17,8 @@ public interface OutputHandler {
 
     void showCommentForUserAction();
 
-    void showExceptionMessage(GameExcpetion e);
+    void showExceptionMessage(GameException e);
 
-    void showSimpleExceptionMessage(String message);
+    void showSimpleMessage(String message);
+
 }

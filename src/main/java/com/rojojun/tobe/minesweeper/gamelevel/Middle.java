@@ -1,6 +1,7 @@
 package com.rojojun.tobe.minesweeper.gamelevel;
 
 public class Middle implements GameLevel {
+
     @Override
     public int getRowSize() {
         return 14;
@@ -12,7 +13,8 @@ public class Middle implements GameLevel {
     }
 
     @Override
-    public int getMineCount() {
+    public int getLandMineCount() {
         return 40;
     }
+
 }

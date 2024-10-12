@@ -1,6 +1,7 @@
 package com.rojojun.tobe.game;
 
-public interface Game {
-    void initialize();
+public interface GameRunnable {
+
     void run();
+
 }

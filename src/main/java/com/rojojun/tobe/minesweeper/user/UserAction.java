@@ -1,7 +1,8 @@
 package com.rojojun.tobe.minesweeper.user;
 
 public enum UserAction {
-    OPEN("셀 오픈"),
+
+    OPEN("셀 열기"),
     FLAG("깃발 꽂기"),
     UNKNOWN("알 수 없음");
 
@@ -10,4 +11,5 @@ public enum UserAction {
     UserAction(String description) {
         this.description = description;
     }
+
 }

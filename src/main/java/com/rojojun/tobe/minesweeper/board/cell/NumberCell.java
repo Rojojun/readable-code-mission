@@ -1,12 +1,12 @@
 package com.rojojun.tobe.minesweeper.board.cell;
 
 public class NumberCell implements Cell {
-    private final int nearByLandMineCount;
 
     private final CellState cellState = CellState.initialize();
+    private final int nearbyLandMineCount;
 
-    public NumberCell(int nearByLandMineCount) {
-        this.nearByLandMineCount = nearByLandMineCount;
+    public NumberCell(int nearbyLandMineCount) {
+        this.nearbyLandMineCount = nearbyLandMineCount;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class NumberCell implements Cell {
     @Override
     public CellSnapshot getSnapshot() {
         if (cellState.isOpened()) {
-            return CellSnapshot.ofNumber(nearByLandMineCount);
+            return CellSnapshot.ofNumber(nearbyLandMineCount);
         }
         if (cellState.isFlagged()) {
             return CellSnapshot.ofFlag();
@@ -49,4 +49,5 @@ public class NumberCell implements Cell {
     public boolean isOpened() {
         return cellState.isOpened();
     }
+
 }

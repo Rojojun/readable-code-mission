@@ -1,6 +1,7 @@
 package com.rojojun.tobe.minesweeper.board.cell;
 
 public interface Cell {
+
     boolean isLandMine();
 
     boolean hasLandMineCount();
@@ -14,4 +15,5 @@ public interface Cell {
     boolean isChecked();
 
     boolean isOpened();
+
 }

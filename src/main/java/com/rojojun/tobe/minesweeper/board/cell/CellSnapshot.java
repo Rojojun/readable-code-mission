@@ -1,48 +1,64 @@
 package com.rojojun.tobe.minesweeper.board.cell;
 
-public class CellSnapshot {
-    private final CellStatus status;
-    private final int nearbyLandMineCounts;
+import java.util.Objects;
 
-    private CellSnapshot(CellStatus status, int nearbyLandMineCounts) {
+public class CellSnapshot {
+
+    private final CellSnapshotStatus status;
+    private final int nearbyLandMineCount;
+
+    private CellSnapshot(CellSnapshotStatus status, int nearbyLandMineCount) {
         this.status = status;
-        this.nearbyLandMineCounts = nearbyLandMineCounts;
+        this.nearbyLandMineCount = nearbyLandMineCount;
     }
 
-    public static CellSnapshot of(CellStatus status, int nearbyLandMineCounts) {
-        return new CellSnapshot(status, nearbyLandMineCounts);
+    public static CellSnapshot of(CellSnapshotStatus status, int nearbyLandMineCount) {
+        return new CellSnapshot(status, nearbyLandMineCount);
     }
 
     public static CellSnapshot ofEmpty() {
-        return new CellSnapshot(CellStatus.EMPTY, 0);
+        return of(CellSnapshotStatus.EMPTY, 0);
     }
 
     public static CellSnapshot ofFlag() {
-        return new CellSnapshot(CellStatus.FLAG, 0);
+        return of(CellSnapshotStatus.FLAG, 0);
     }
 
     public static CellSnapshot ofLandMine() {
-        return new CellSnapshot(CellStatus.LAND_MINE, 0);
+        return of(CellSnapshotStatus.LAND_MINE, 0);
     }
 
-    public static CellSnapshot ofNumber(int nearbyLandMineCounts) {
-        return new CellSnapshot(CellStatus.NUMBER, nearbyLandMineCounts);
+    public static CellSnapshot ofNumber(int nearbyLandMineCount) {
+        return of(CellSnapshotStatus.NUMBER, nearbyLandMineCount);
     }
 
     public static CellSnapshot ofUnchecked() {
-        return new CellSnapshot(CellStatus.UNCHECKED, 0);
+        return of(CellSnapshotStatus.UNCHECKED, 0);
     }
 
+    public boolean isSameStatus(CellSnapshotStatus cellSnapshotStatus) {
+        return this.status == cellSnapshotStatus;
+    }
 
-    public CellStatus getStatus() {
+    public CellSnapshotStatus getStatus() {
         return status;
     }
 
     public int getNearbyLandMineCount() {
-        return nearbyLandMineCounts;
+        return nearbyLandMineCount;
     }
 
-    public boolean isSameStatus(CellStatus cellStatus) {
-        return status == cellStatus;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CellSnapshot snapshot = (CellSnapshot) o;
+        return nearbyLandMineCount == snapshot.nearbyLandMineCount && status == snapshot.status;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(status, nearbyLandMineCount);
+    }
+
 }

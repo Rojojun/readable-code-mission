@@ -1,6 +1,7 @@
 package com.rojojun.tobe.minesweeper.board.cell;
 
 public class EmptyCell implements Cell {
+
     private final CellState cellState = CellState.initialize();
 
     @Override
@@ -43,4 +44,5 @@ public class EmptyCell implements Cell {
     public boolean isOpened() {
         return cellState.isOpened();
     }
+
 }
