@@ -1,5 +1,6 @@
 package com.rojojun.tobe.minesweeper.board.position;
 
+import com.rojojun.tobe.minesweeper.board.cell.Cell;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -47,6 +48,19 @@ class CellPositionsTest {
                 random3ExtractedCellList.stream().distinct().toList()
         );
         assertThat(result.size() + random3ExtractedCellList.size()).isEqualTo(9);
+    }
+
+    @DisplayName("게임판을 받아서 좌표를 설정해준다.")
+    @Test
+    void from() {
+        // given
+        Cell[][] board = new Cell[3][3];
+
+        // when
+        CellPositions result = CellPositions.from(board);
+
+        // then
+        assertThat(result.getPositions()).hasSize(9);
     }
 
     private List<CellPosition> cellPositionList3By3Size = List.of(
